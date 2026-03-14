@@ -1,0 +1,10 @@
+<section class="py-24">
+    <div class="container max-w-screen-xl grid gap-4 grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_320px]">
+
+        <app-side-left class="order-1 lg:order-1" (categorySelected)="updateViewPosts($event)"></app-side-left>
+
+        <app-side-right class="order-2 lg:order-3 hidden lg:block"></app-side-right>
+        <app-feed-content class="order-3 lg:order-2" [displayView]="currentPost"></app-feed-content>
+
+    </div>
+</section>

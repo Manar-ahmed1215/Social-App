@@ -1,0 +1,19 @@
+<section id="auth" class="h-screen flex items-center justify-center px-4">
+  <div class="w-full max-w-[600px]">
+    <div class="bg-white rounded-xl p-5">
+      <div class="bg-gray-200 rounded-xl p-1 flex">
+        <a routerLink="login" routerLinkActive="bg-white text-maincolor shadow-sm"
+           class="w-1/2 text-center py-2 rounded-xl font-extrabold text-[14px] cursor-pointer">
+          {{ 'auth_layout.tabs.login' | translate }}
+        </a>
+
+        <a routerLink="register" routerLinkActive="bg-white text-maincolor shadow-sm"
+           class="w-1/2 text-center py-2 rounded-xl font-extrabold text-[14px] cursor-pointer">
+          {{ 'auth_layout.tabs.register' | translate }}
+        </a>
+      </div>
+
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,86 @@
+<div class="mt-5">
+    <h2 class="text-[24px] leading-8 font-extrabold">{{ 'login_page.title' | translate }}</h2>
+    <p class="text-[14px] mt-1 text-gray-700">{{ 'login_page.subtitle' | translate }}</p>
+
+    <form class="grid gap-y-3 mt-5" [formGroup]="loginForm" (ngSubmit)="submitForm()">
+
+        <div class="relative">
+            <i class="fa-solid fa-at absolute top-4.5 left-3 text-gray-400"></i>
+            <input
+                [class]="{'border-blue-900': loginForm.get('login')?.valid, 'border-red-700':loginForm.get('login')?.invalid && loginForm.get('login')?.touched}"
+                formControlName="login" type="text" id="login"
+                class="block px-10 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                placeholder=" " />
+            <label for="login"
+                class="absolute text-sm text-gray-400 duration-300 bg-neutral-primary transform -translate-y-4 scale-75 top-2 z-10 origin-left mx-10 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                {{ 'login_page.form.login_label' | translate }}
+            </label>
+        </div>
+
+        @if(loginForm.get("login")?.invalid && loginForm.get("login")?.touched){
+        <div class="flex px-4 py-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+                <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                    @if(loginForm.get("login")?.hasError("required")){
+                    <li>{{ 'login_page.form.errors.login_required' | translate }}</li>
+                    }
+                    @else if (loginForm.get("login")?.hasError("minlength")) {
+                    <li>{{ 'login_page.form.errors.login_minlength' | translate }}</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        }
+
+        <div class="relative">
+            <i class="fa-solid fa-key absolute top-4.5 left-3 text-gray-400"></i>
+            <input #password
+                [class]="{'border-blue-900': loginForm.get('password')?.valid, 'border-red-700':loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+                formControlName="password" type="password" id="password"
+                class="block px-10 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                placeholder=" " />
+            <label for="password"
+                class="absolute text-sm text-gray-400 duration-300 bg-neutral-primary transform -translate-y-4 scale-75 top-2 z-10 origin-left mx-10 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                {{ 'login_page.form.password_label' | translate }}
+            </label>
+            <span (click)="showPassword(password)"
+                class="absolute top-1/2 -translate-y-1/2 right-5 text-gray-400 cursor-pointer">
+                <i [class]="password.type==='password'?' fa-eye-slash':' fa-eye'" class="fas"></i>
+            </span>
+        </div>
+
+        @if(loginForm.get("password")?.invalid && loginForm.get("password")?.touched){
+        <div class="flex px-4 py-2 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+                <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                    @if(loginForm.get("password")?.hasError("required")){
+                    <li>{{ 'login_page.form.errors.password_required' | translate }}</li>
+                    }
+                    @else if (loginForm.get("password")?.hasError("pattern")) {
+                    <li>{{ 'login_page.form.errors.password_pattern' | translate }}</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        }
+
+        <button type="submit" [disabled]="loginForm.invalid || loading"
+            class="bg-maincolor text-white text-[16px] font-extrabold w-full py-3 rounded-xl hover:bg-maincolor-900 duration-300 cursor-pointer disabled:bg-gray-500 disabled:cursor-not-allowed">
+
+            {{ 'login_page.form.submit_button' | translate }}
+
+            @if (loading) {
+            <i class="fas fa-spinner fa-spin ms-2"></i>
+            }
+        </button>
+
+        @if(msgError){
+        <p class="text-center text-fg-danger-strong p-2 w-full mx-auto">{{ msgError }}!!</p>
+        }
+    </form>
+    
+</div>

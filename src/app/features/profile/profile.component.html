@@ -1,0 +1,176 @@
+@if (isLoading) {
+<section class="py-24 animate-pulse">
+    <div class="max-w-6xl mx-auto px-2 sm:px-0">
+        <div class="w-full h-48 md:h-80 bg-gray-200 rounded-t-[30px] md:rounded-t-[40px]"></div>
+
+        <div
+            class="bg-white rounded-b-[30px] md:rounded-b-[40px] px-4 md:px-8 pb-12 shadow-sm border-x border-b border-gray-100">
+            <div class="flex flex-col lg:flex-row justify-between items-center pt-4 gap-6">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div
+                        class="w-28 h-28 md:w-32 md:h-32 rounded-full bg-gray-200 border-4 border-white -mt-16 md:-mt-20 shadow-sm">
+                    </div>
+                    <div class="space-y-3">
+                        <div class="h-6 w-48 bg-gray-200 rounded-lg"></div>
+                        <div class="h-4 w-32 bg-gray-100 rounded-lg mx-auto md:mx-0"></div>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <div class="h-20 w-24 bg-gray-50 rounded-2xl border border-gray-100"></div>
+                    <div class="h-20 w-24 bg-gray-50 rounded-2xl border border-gray-100"></div>
+                    <div class="h-20 w-24 bg-gray-50 rounded-2xl border border-gray-100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+}
+@else {
+<section class="py-24">
+    <div class="bg-gray-100 min-h-screen font-sans">
+        <div class="max-w-6xl mx-auto overflow-hidden px-2 sm:px-0">
+            <div class="relative w-full h-48 md:h-80 overflow-hidden rounded-t-[30px] md:rounded-t-[40px]">
+                @if(myProfile.cover){
+                <img [src]="coverImgUrl || myProfile.cover" class="w-full h-full object-cover" alt="cover">} @else {
+                <div class="w-full h-full bg-linear-to-r from-[#111827] via-[#1e293b] to-[#3b82f6]"></div>
+                }
+
+                <input (change)="selectCoverImage($event)" type="file" id="cover-upload" hidden>
+
+                <label for="cover-upload"
+                    class="absolute bottom-3 right-3 cursor-pointer bg-black/50 text-white p-2 rounded-full">
+                    <i class="fa-solid fa-camera"></i>
+                </label>
+            </div>
+
+            <div
+                class="bg-white rounded-b-[30px] md:rounded-b-[40px] px-4 md:px-8 pb-8 md:pb-12 shadow-sm relative z-10 border-x border-b border-gray-100">
+
+                <div class="flex flex-col lg:flex-row justify-between items-center lg:items-center pt-4 gap-6">
+
+                    <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left">
+                        <div class="relative -mt-16 md:-mt-20 group/photo cursor-pointer">
+                            <img (click)="openImage(myProfile.photo)" [src]="imgUrl || myProfile.photo"
+                                class="w-28 h-28 md:w-32 md:h-32 rounded-full border-[4px] md:border-[6px] border-white shadow-lg bg-blue-100 object-cover"
+                                alt="Profile">
+
+                            <div
+                                class="flex justify-around absolute bottom-2 w-full opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300">
+                                <span (click)="openImage(myProfile.photo)"
+                                    class="p-1.5 bg-blue-50/90 rounded-full hover:bg-white transition-colors">
+                                    <i class="fa-solid fa-up-right-and-down-left-from-center text-blue-600 text-xs"></i>
+                                </span>
+                                <input (change)="selectImage($event)" type="file" id="profile-upload" class="hidden"
+                                    accept="image/*" />
+                                <label for="profile-upload"
+                                    class="p-1.5 bg-blue-600/90 rounded-full hover:bg-blue-700 transition-colors cursor-pointer">
+                                    <i class="fa-regular fa-camera text-white text-xs"></i>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center md:items-start">
+                            <h1 class="text-2xl md:text-3xl font-extrabold text-[#0f172a]">{{myProfile.name}}</h1>
+                            <p class="text-gray-400 font-medium text-base md:text-lg">@{{myProfile.username}}</p>
+                            <div
+                                class="mt-2 inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-[#eff6ff] text-[#2563eb] text-xs md:text-sm font-semibold border border-[#dbeafe]">
+                                <i class="fa-solid fa-users-viewfinder text-xs"></i>
+                                Route Posts member
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 md:gap-3 w-full lg:w-auto">
+                        <div
+                            class="p-3 md:p-5 rounded-2xl border border-gray-100 shadow-sm text-center bg-white min-w-0">
+                            <span
+                                class="block text-[10px] md:text-2xs font-black text-gray-400 uppercase tracking-widest mb-1 truncate">Followers</span>
+                            <span
+                                class="text-xl md:text-3xl font-bold text-[#0f172a]">{{myProfile.followersCount}}</span>
+                        </div>
+                        <div
+                            class="p-3 md:p-5 rounded-2xl border border-gray-100 shadow-sm text-center bg-white min-w-0">
+                            <span
+                                class="block text-[10px] md:text-2xs font-black text-gray-400 uppercase tracking-widest mb-1 truncate">Following</span>
+                            <span
+                                class="text-xl md:text-3xl font-bold text-[#0f172a]">{{myProfile.followingCount}}</span>
+                        </div>
+                        <div
+                            class="p-3 md:p-5 rounded-2xl border border-gray-100 shadow-sm text-center bg-white min-w-0">
+                            <span
+                                class="block text-[10px] md:text-2xs font-black text-gray-400 uppercase tracking-widest mb-1 truncate">Bookmarks</span>
+                            <span class="text-xl md:text-3xl font-bold text-[#0f172a]">{{totalSavedPosts}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8 md:mt-12">
+                    <div
+                        class="lg:col-span-2 p-6 md:p-8 bg-gray-50/50 border border-gray-100 rounded-[25px] md:rounded-[30px]">
+                        <h3 class="text-sm font-black text-[#0f172a] mb-4 md:mb-6 uppercase tracking-wider">About</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-gray-500 font-medium">
+                                <i class="fa-regular fa-envelope text-lg w-6"></i>
+                                <span class="text-[12px] md:text-[13px] break-all">{{myProfile.email}}</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-gray-500 font-medium">
+                                <i class="fa-solid fa-user-check text-lg w-6"></i>
+                                <span class="text-[12px] md:text-[13px]">Active on Route Posts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+                        <div class="p-5 md:p-6 bg-[#f8fafc] border border-blue-50 rounded-[20px] shadow-sm">
+                            <span
+                                class="block text-[10px] md:text-2xs font-black text-blue-800 uppercase tracking-widest mb-1">My
+                                Posts</span>
+                            <span class="text-xl md:text-2xl font-bold text-[#0f172a]">{{totalPosts}}</span>
+                        </div>
+                        <div class="p-5 md:p-6 bg-[#f8fafc] border border-blue-50 rounded-[20px] shadow-sm">
+                            <span
+                                class="block text-[10px] md:text-2xs font-black text-blue-800 uppercase tracking-widest mb-1">Saved
+                                Posts</span>
+                            <span class="text-xl md:text-2xl font-bold text-[#0f172a]">{{totalSavedPosts}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white w-full mt-6 md:mt-8 rounded-[20px] p-5 md:p-7 shadow-sm">
+                <div class="bg-secondColor inline-flex p-1.5 rounded-2xl">
+                    <button (click)="setActiveTab('myPosts')" [class.text-blue-500]="activeTab === 'myPosts'"
+                        [class.bg-white]="activeTab === 'myPosts'" [class.shadow-sm]="activeTab === 'myPosts'"
+                        class="px-4 py-2 rounded-xl cursor-pointer text-sm font-extrabold transition-all">
+                        <i class="fa-regular fa-file-lines me-1"></i> My Posts
+                    </button>
+                    <button (click)="setActiveTab('saved')" [class.text-blue-500]="activeTab === 'saved'"
+                        [class.bg-white]="activeTab === 'saved'" [class.shadow-sm]="activeTab === 'saved'"
+                        class="px-4 py-2 rounded-xl cursor-pointer text-sm font-extrabold transition-all ms-2">
+                        <i class="fa-solid fa-bookmark me-1"></i> Saved
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <app-my-posts (countChanged)="updateTotalPosts($event)"
+                    [hidden]="activeTab !== 'myPosts'"></app-my-posts>
+                <app-my-posts-saved (countChanged)="updateTotalPostsSaved($event)"
+                    [hidden]="activeTab !== 'saved'"></app-my-posts-saved>
+            </div>
+        </div>
+    </div>
+
+    @if (selectedImage) {
+    <div class="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
+        <div class="relative">
+            <img [src]="selectedImage" class="max-h-[85vh] max-w-full rounded-lg shadow-2xl">
+            <button (click)="closeImage()"
+                class="absolute -top-12 right-0 text-white text-3xl cursor-pointer hover:text-gray-300">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    }
+</section>
+}

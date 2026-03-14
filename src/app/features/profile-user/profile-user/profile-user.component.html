@@ -1,0 +1,180 @@
+<section class="py-12 md:py-24 bg-slate-50 min-h-screen">
+    <div class="container max-w-screen-xl mx-auto px-4">
+
+        <div>
+            <div class="mb-4">
+            <button (click)="backPage()"
+                class="bg-white px-4 py-2 rounded-xl cursor-pointer shadow-sm hover:bg-gray-50 transition-all text-sm font-semibold">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back
+            </button>
+        </div>
+            @if(userDetails && userDetails.user){
+            <div class="relative w-full h-48 md:h-80 overflow-hidden rounded-t-[24px] md:rounded-t-[40px]">
+                @if(userDetails.user.cover){
+                <img [src]="userDetails.user.cover" class="w-full h-full object-cover" alt="Cover Image">
+                } @else {
+                <div class="w-full h-full bg-linear-to-r from-[#111827] via-[#1e293b] to-[#3b82f6]"></div>
+                }
+            </div>
+            }
+
+            <div
+                class="bg-white rounded-b-[24px] md:rounded-b-[40px] px-4 md:px-8 pb-8 md:pb-12 shadow-sm relative z-10 border-x border-b border-gray-100">
+                <div class="flex flex-col lg:flex-row lg:items-end pt-4 gap-4 md:gap-6">
+
+                    @if(userDetails && userDetails.user) {
+                    <div class="relative -mt-16 md:-mt-20 flex justify-center lg:justify-start">
+                        <div class="relative group/photo cursor-pointer">
+                            @if(userDetails.user.photo) {
+                            <img [src]="userDetails.user.photo"
+                                class="w-28 h-28 md:w-36 md:h-36 rounded-full border-[4px] md:border-[6px] border-white shadow-lg bg-blue-100 object-cover"
+                                [alt]="userDetails.user.name" />
+                            } @else {
+                            <img src="/assets/default-profile.png"
+                                class="w-28 h-28 md:w-36 md:h-36 rounded-full border-[4px] md:border-[6px] border-white shadow-lg bg-blue-100 object-cover"
+                                [alt]="userDetails.user.name || 'User'" />
+                            }
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex flex-col md:flex-row items-center md:items-end justify-between w-full flex-1 gap-4 text-center md:text-left">
+                        <div class="min-w-0">
+                            <h1 class="text-2xl md:text-3xl font-extrabold text-[#0f172a] truncate">
+                                {{userDetails.user.name}}</h1>
+                            <p class="text-gray-400 font-medium text-base md:text-lg">@{{userDetails.user.username}}</p>
+                        </div>
+
+                        <button (click)="followOrUnfollow()"
+                            [ngClass]="userDetails.isFollowing ? 'bg-transparent text-gray-700 border border-gray-300 hover:bg-gray-200' : 'bg-blue-600 text-white border-transparent hover:bg-blue-700'"
+                            class="w-full md:w-auto py-2.5 px-6 rounded-xl font-bold transition cursor-pointer shadow-sm active:scale-95">
+                            <i class="fa-solid"
+                                [ngClass]="userDetails.isFollowing ? 'fa-check me-1' : 'fa-user-plus me-1'"></i>
+                            {{ userDetails.isFollowing ? 'Following' : 'Follow' }}
+                        </button>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class=" mx-auto">
+            @if(userPosts.length === 0) {
+            <div
+                class="bg-white rounded-[20px] mt-8 p-12 md:p-20 text-center shadow-sm border border-gray-100 flex flex-col items-center">
+                <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6">
+                    <i class="fa-regular fa-pen-to-square text-3xl text-blue-500"></i>
+                </div>
+
+                <h3 class="text-[#0f172a] font-extrabold text-xl md:text-2xl mb-2">
+                    No posts yet
+                </h3>
+                <p class="text-gray-500 text-sm md:text-base max-w-xs mx-auto leading-relaxed">
+                    It looks like this user hasn't shared anything with the world yet.
+                </p>
+
+                @if(targetId === myId) {
+                <button
+                    class="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all active:scale-95 shadow-lg shadow-blue-100">
+                    Create your first post
+                </button>
+                }
+            </div>
+            }
+            @for (post of userPosts; track post._id) {
+            <div class="bg-white w-full mt-6 md:mt-8 rounded-[20px] p-4 md:p-7 shadow-sm border border-gray-100">
+
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-3">
+                        <img [src]="userDetails.user.photo" alt="User Avatar"
+                            class="w-10 h-10 rounded-full object-cover shrink-0">
+                        <div class="min-w-0">
+                            <h3 class="font-bold text-gray-900 text-sm md:text-base leading-tight truncate">
+                                {{userDetails.user.name}}</h3>
+                            <div class="flex items-center text-gray-400 text-[11px] md:text-xs">
+                                <span class="truncate max-w-[80px] md:max-w-none">@{{userDetails.user.username}}</span>
+                                <span class="mx-1.5 text-[8px]">•</span>
+                                <span class="whitespace-nowrap">{{post.createdAt | timeAgo}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    @if(post.sharedPost){
+                    <p class="text-gray-800 text-sm md:text-[15px] mb-3 leading-relaxed">{{post.body}}</p>
+
+                    <div
+                        class="bg-slate-50 rounded-xl my-3 border border-slate-200 p-3 md:p-4 transition-colors hover:border-slate-300">
+                        <div class="flex items-start justify-between mb-3 gap-2">
+                            <div class="flex items-center gap-2 md:gap-3 min-w-0">
+                                <img [src]="post.sharedPost.user.photo" [alt]="post.sharedPost.user.name"
+                                    class="size-8 md:size-10 rounded-full object-cover shrink-0 border border-white" />
+                                <div class="min-w-0">
+                                    <span
+                                        class="text-sm md:text-[15px] font-bold text-slate-900 leading-tight block truncate hover:underline cursor-pointer">
+                                        {{post.sharedPost.user.name}}
+                                    </span>
+                                    <div class="flex items-center text-[11px] md:text-[13px] text-slate-500 truncate">
+                                        <span>@{{post.sharedPost.user.username}}</span>
+                                        <span class="mx-1">•</span>
+                                        <span>{{post.sharedPost.createdAt | timeAgo}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button [routerLink]="['/details' , post.sharedPost._id]"
+                                class="text-[11px] md:text-[13px] text-blue-600 font-bold cursor-pointer whitespace-nowrap hover:bg-blue-50 px-2 py-1 rounded-md">
+                                <i class="fa-solid fa-link me-1"></i> Original
+                            </button>
+                        </div>
+
+                        <div class="text-gray-800 text-sm leading-relaxed">
+                            @if (post.sharedPost.body) { <p class="mb-3">{{post.sharedPost.body}}</p> }
+                            @if (post.sharedPost.image) {
+                            <img [src]="post.sharedPost.image"
+                                class="w-full max-h-60 md:max-h-80 object-cover rounded-lg shadow-sm"
+                                alt="Shared Post Image" />
+                            }
+                        </div>
+                    </div>
+                    } @else {
+                    @if (post.body) {
+                    <p class="text-gray-800 text-sm md:text-[15px] mb-4 leading-relaxed">{{post.body}}</p>
+                    }
+                    @if (post.image) {
+                    <img [src]="post.image" alt="Post Image"
+                        class="w-full max-h-[500px] object-cover rounded-xl shadow-sm">
+                    }
+                    }
+                </div>
+
+                <div
+                    class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-gray-500 text-[11px] md:text-xs font-semibold border-t border-gray-100 pt-4">
+                    <div class="flex items-center gap-4">
+                        <button class="hover:text-blue-600 transition-colors flex items-center gap-1 cursor-pointer">
+                            <i class="fa-regular fa-thumbs-up text-sm"></i>
+                            <span>{{post.likesCount}} <span class="hidden xs:inline">likes</span></span>
+                        </button>
+                        <button class="hover:text-blue-600 transition-colors flex items-center gap-1 cursor-pointer">
+                            <i class="fa-solid fa-share text-sm"></i>
+                            <span>{{post.sharesCount}} <span class="hidden xs:inline">shares</span></span>
+                        </button>
+                        <button class="hover:text-blue-600 transition-colors flex items-center gap-1 cursor-pointer">
+                            <i class="fa-regular fa-comment text-sm"></i>
+                            <span>{{post.commentsCount}} <span class="hidden xs:inline">comments</span></span>
+                        </button>
+                    </div>
+
+                    <div class="flex justify-end border-t sm:border-t-0 pt-2 sm:pt-0">
+                        <a [routerLink]="['/details' , post._id]"
+                            class="text-blue-600 font-bold hover:underline bg-blue-50 sm:bg-transparent px-3 py-1.5 sm:p-0 rounded-lg w-full sm:w-auto text-center">
+                            View details <i class="fa-solid fa-arrow-right ms-1 text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+    </div>
+</section>

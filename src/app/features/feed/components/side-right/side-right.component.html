@@ -1,0 +1,102 @@
+<aside
+    class="bg-white sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto rounded-3xl shadow-sm border border-slate-100 px-4 font-sans">
+
+    <div class="sticky top-0 bg-white z-10 py-2">
+
+        <div class="flex items-center justify-between mb-4 px-1">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user-group text-blue-600 text-[1.1rem]"></i>
+                <h2 class="font-bold text-slate-900 text-[17px]">Suggested Friends</h2>
+            </div>
+            <span class="bg-slate-100 text-slate-600 text-xs font-bold px-2.5 py-1 rounded-full">5</span>
+        </div>
+
+        <div class="relative mb-4">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-sm"></i>
+            </div>
+            <input [(ngModel)]="searchText" (ngModelChange)="search()" type="text"
+                class="bg-white border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 placeholder-slate-400 outline-none transition-all"
+                placeholder="Search friends..." aria-label="Search friends" />
+        </div>
+    </div>
+
+   @if(loadingSuggestions){
+  @for (item of [1,2,3,4]; track item) {
+    <div class="pb-2 animate-pulse">
+      <div class="p-3 border border-slate-200 rounded-2xl bg-white">
+        <div class="flex items-start gap-3">
+
+          <div class="w-11 h-11 rounded-full bg-slate-200"></div>
+
+          <div class="flex-1 flex flex-col gap-2">
+            <div class="h-3 bg-slate-200 rounded w-24"></div>
+            <div class="h-3 bg-slate-200 rounded w-16"></div>
+
+            <div class="flex gap-2 mt-2">
+              <div class="h-5 w-20 bg-slate-200 rounded"></div>
+              <div class="h-5 w-16 bg-slate-200 rounded"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  }
+}
+   @else {
+     @for (friend of follower ; track friend._id) {
+    <div class=" pb-2">
+        <div class="p-3 border border-slate-200 rounded-2xl bg-white hover:border-slate-300 transition-colors">
+            <div class="flex items-start gap-3">
+                <img
+                [routerLink]="['/profile' , friend._id]"
+                [src]="friend.photo" [alt]="friend.name"
+                    class="w-11 h-11 rounded-full object-cover shrink-0 bg-slate-100 border border-slate-50 cursor-pointer" />
+
+                <div class="flex-1 min-w-0 flex flex-col gap-2">
+                    <div class="flex items-center justify-between gap-2 mt-0.5">
+                        <div class="flex flex-col min-w-0">
+                            <span
+                                class="text-[14px] font-bold text-slate-900 truncate leading-tight">{{friend.name}}</span>
+                            <span
+                                class="text-[13px] text-slate-500 truncate leading-tight mt-0.5">@{{friend.username}}</span>
+                        </div>
+                        <button (click)="followOrUnFollow(friend._id)" [disabled]="updatingFollow === friend._id"
+                            class="shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 text-[13px] font-bold rounded-xl transition-colors cursor-pointer disabled:cursor-not-allowed">
+
+                            @if (friend._id === updatingFollow) {
+                            <i class="fas fa-spinner fa-spin text-[11px]"></i> Updating...
+                            }
+                            @else {
+                            <i class="fa-solid fa-user-plus text-[11px]"></i>Follow
+                            }
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="text-[11px] font-semibold text-slate-500 bg-slate-100/80 px-2 py-1 rounded-lg">{{friend.followersCount}}
+                            followers</span>
+                        <span
+                            class="text-[11px] font-semibold text-blue-500 bg-blue-50 px-2 py-1 rounded-lg">{{friend.mutualFollowersCount}}
+                            mutual</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+   }
+
+    <div class="sticky bottom-0 bg-white z-10 pb-3">
+        <button (click)="loadMore()" [disabled]="loadingMore"
+            class="w-full cursor-pointer mt-3 py-2.5 bg-white border border-slate-200 rounded-xl text-[14px] font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all outline-none focus:ring-4 focus:ring-slate-100 disabled:cursor-not-allowed">
+            @if(loadingMore){
+            <i class="fas fa-spinner fa-spin ms-2"></i> View more
+            }@else {
+            View more
+            }
+        </button>
+    </div>
+</aside>

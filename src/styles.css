@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+@import 'ngx-toastr/toastr';
+
+@utility container {
+    margin-inline: auto;
+    padding-inline: 0;
+}
+
+@theme{
+    --color-maincolor: #00298D ;
+    --color-maincolor-80: #F2F6FF;
+    --color-maincolor-900: #001F6B;
+    --color-secondColor: #F0F2F5 ;
+    --color-gray-50:#F8FAFC;
+    --color-gray-80:#F1F5F9;
+
+    
+
+}
+body{
+    background-color: var(--color-secondColor);
+    font-family: "Inter", sans-serif;
+    overflow-x: hidden;
+}

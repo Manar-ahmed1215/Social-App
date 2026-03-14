@@ -1,0 +1,127 @@
+@if (myPosts.length === 0) {
+   <div class="flex flex-col items-center justify-center py-16 px-4 text-center bg-white rounded-[30px] shadow-sm border border-gray-100 mt-8">
+    <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mb-6 animate-pulse-gentle">
+        <i class="fa-regular fa-pen-to-square text-4xl text-blue-500"></i>
+    </div>
+    
+    <h3 class="text-xl font-extrabold text-[#0f172a] mb-2">No Posts Yet</h3>
+    <p class="text-gray-500 text-sm max-w-[280px] leading-relaxed">
+        You haven't shared anything with the world yet. Share your first thought or photo!
+    </p>
+
+    <button routerLink="/feed" 
+        class="mt-8 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-sm font-bold transition-all shadow-lg shadow-blue-200 cursor-pointer flex items-center gap-2">
+        <i class="fa-solid fa-plus"></i>
+        Create First Post
+    </button>
+</div>
+}
+@else {
+    @for (post of myPosts; track post._id) {
+<div class="bg-white w-full mt-8 rounded-[20px] p-7">
+    <div class="flex justify-between items-start mb-4 ">
+        <div class="flex items-center gap-3">
+            <img [src]="post.user.photo" alt="User Avatar" class="w-10 h-10 rounded-full object-cover">
+            <div>
+                <h3 class="font-semibold text-gray-900 text-sm">{{post.user.name}}</h3>
+                <p class="text-gray-400 text-xs">@{{post.user.username}}</p>
+            </div>
+        </div>
+        <a [routerLink]="['/details' , post._id]" class="text-blue-600 text-xs font-medium hover:underline">View
+            details</a>
+    </div>
+
+    <div class="mb-3">
+
+         @if(post.sharedPost){
+        <p>{{post.body}}</p>
+        <div class="bg-white rounded-[16px] my-3 shadow-sm border border-slate-200 p-4 font-sans">
+            <!-- user details  -->
+            <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center gap-3">
+                    <img [src]="post.sharedPost.user.photo" [alt]="post.sharedPost.user.name"
+                        class="size-10 rounded-full object-cover shrink-0 bg-slate-100 border border-slate-50" />
+
+                    <div>
+                        <span
+                            class="text-[15px] font-bold text-slate-900 leading-tight hover:underline cursor-pointer">{{post.sharedPost.user.name}}
+                        </span>
+                        <div class="flex items-center text-[13px] text-slate-500 mt-0.5 gap-1">
+                            <span class="hover:underline cursor-pointer">@{{post.sharedPost.user.username}}</span>
+                            <span>&middot;</span>
+                            <span class="hover:underline cursor-pointer">{{post.sharedPost.createdAt | timeAgo}}</span>
+                            <span>&middot;</span>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button [routerLink]="['/details' , post.sharedPost._id]"
+                        class="text-[14px] text-blue-600 font-extrabold cursor-pointer"> <i
+                            class="fa-solid fa-link"></i> Original Post</button>
+                </div>
+
+            </div>
+
+            <!-- post content  -->
+            <div class="text-[15px] text-slate-900 ">
+                @if (post.sharedPost.body) {
+                <p>{{post.sharedPost.body}}</p>
+                }
+                @if (post.sharedPost.image) {
+                <img (click)="openImage(post.sharedPost.image)" [src]="post.sharedPost.image"
+                    class="w-full max-h-75 object-cover rounded shadow mt-2 cursor-pointer" alt="" />
+                }
+            </div>
+
+
+
+        </div>
+        }
+        @else {
+            @if (post.body) {
+        <p class="text-gray-800 text-sm mb-4">{{post.body}}</p>
+        }
+        @if (post.image) {
+        <img (click)="openImage(post.image)" [src]="post.image" alt="" class="w-full h-75 object-cover rounded-xl  cursor-pointer">
+        }
+        }
+        
+  <!-------------------------------------------image---------------------->
+        @if (selectedImage) {
+        <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <div>
+                <img [src]="selectedImage" class="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg">
+                <button (click)="closeImage()"
+                    class="absolute top-7 right-7  font-bold rounded-full bg-gray-800 p-1.5 cursor-pointer"><i
+                        class="fa-solid fa-xmark text-white "></i></button>
+            </div>
+        </div>
+        }
+
+    </div>
+
+    <div class="flex items-center justify-between gap-6 text-gray-500 text-xs font-medium border-t border-gray pt-3">
+        <div>
+            <button class="me-4 hover:text-blue-600 cursor-pointer">
+                <i class="fa-regular fa-thumbs-up  me-1"></i>
+                <span>{{post.likesCount}} likes</span>
+            </button>
+            <button class="me-4 hover:text-blue-600 cursor-pointer">
+                <i class="fa-solid fa-share me-1"></i>
+                <span>{{post.sharesCount}} shares</span>
+            </button>
+            <button class="me-4 hover:text-blue-600 cursor-pointer">
+                <i class="fa-regular fa-comment me-1"></i>
+                <span>{{post.commentsCount}} comments</span>
+            </button>
+        </div>
+        <div class="flex justify-end text-gray-400 text-xs items-center gap-1">
+            <i class="fa-regular fa-clock me-1"></i>
+            <span>{{post.createdAt | formattedDate}}</span>
+        </div>
+    </div>
+</div>
+}
+}

@@ -1,0 +1,118 @@
+<section class="py-24">
+  <div class="container mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 gap-x-4">
+    <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+      <div class="sticky top-20 bg-white z-20 ">
+
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0">
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-gray-900">Notifications</h2>
+            <p class="text-gray-500 text-xs sm:text-sm">Realtime updates for likes, comments, shares...</p>
+          </div>
+          <button (click)="readAll()" [disabled]="unreadCount===0"
+            class="text-white bg-blue-700 border border-gray-300 hover:bg-blue-800 font-medium rounded-lg text-xs sm:text-sm px-3 py-2 flex items-center gap-2 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-800">
+            <i class="fa-solid fa-check-double"></i> Mark all as read
+          </button>
+        </div>
+        <div class="py-4 sm:py-5 flex flex-wrap gap-2 border-b border-gray-100">
+          <button (click)="showAllNotifications()"
+            [ngClass]="{'bg-blue-600 text-white': filter==='all', 'bg-gray-100 text-gray-700': filter!=='all'}"
+            class="px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium">
+            All
+          </button>
+
+          <button (click)="showUnreadNotifications()"
+            [ngClass]="{'bg-blue-600 text-white': filter==='unread', 'bg-gray-100 text-gray-700': filter!=='unread'}"
+            class="px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium flex items-center gap-2">
+            Unread
+            <span
+              class="bg-blue-100 text-blue-600 px-1.5 sm:px-2 rounded-full text-[10px] sm:text-xs">{{unreadCount}}</span>
+          </button>
+        </div>
+      </div>
+
+
+      <div class="notifications-list mt-4 space-y-3">
+        @if(filteredNotifications.length === 0) {
+        <div class="flex justify-center items-center py-10">
+          <div class="text-center text-gray-400">
+            <i class="fa-regular fa-bell-slash text-3xl sm:text-4xl mb-3"></i>
+            <p class="text-sm sm:text-base">
+              @if(filter === 'unread'){
+              No unread notifications
+              }
+              @else{
+              No notifications yet
+              }
+            </p>
+          </div>
+        </div>
+        }
+
+        @for (item of filteredNotifications; track item._id) {
+        <div (click)="goToDetails(item)"
+          [ngClass]="{'bg-blue-50 border-blue-200': !item.isRead,'bg-white border-gray-200 hover:bg-gray-100': item.isRead }"
+          class="w-full sm:h-28 p-3 rounded-xl flex flex-col sm:flex-row items-start sm:items-center border transition-colors shadow-sm cursor-pointer">
+
+          <div class="flex items-start sm:items-center gap-3 w-full sm:w-auto">
+            <div (click)="goToProfile(item.actor._id, $event)">
+              <img class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover" [src]="item.actor.photo">
+            </div>
+            <div class="flex-1 text-slate-600">
+              <p class="text-[14px] sm:text-sm leading-5 sm:leading-6">
+                <a (click)="goToProfile(item.actor._id, $event)"
+                  class="font-extrabold hover:underline hover:text-blue-600">{{item.actor.name}}</a>
+                @if(item.type ==="comment_post"){ commented on your post }
+                @else if(item.type ==="like_post"){ liked your post }
+                @else if(item.type ==="follow_user"){ followed you }
+                @else if(item.type ==="share_post"){ shared your post }
+              </p>
+              <span class="text-[13px] sm:text-sm">{{item.entity.content}}</span>
+
+              <div class="mt-2 relative flex flex-wrap sm:flex-nowrap gap-2">
+                @if (!item.isRead) {
+                <button (click)="markAsRead(item._id, $event)"
+                  class="border border-blue-200 text-blue-700 px-3 py-1 rounded-md text-[11px] sm:text-xs font-bold bg-white hover:bg-blue-50 flex items-center gap-1">
+                  <i class="fa-solid fa-check"></i> Mark as read
+                </button>
+                }
+                @else{
+                <span
+                  class="text-green-500 px-3 py-1 rounded-md text-[11px] sm:text-xs font-bold flex items-center gap-1">
+                  <i class="fa-solid fa-check"></i> Read
+                </span>
+                }
+
+                <button class="text-blue-500 absolute  -bottom-4 -left-7 bg-white rounded-full px-1">
+                  @if(item.type ==="comment_post"){ <i class="fa-regular fa-comment text-[12px] sm:text-sm"></i> }
+                  @else if(item.type ==="like_post"){ <i
+                    class="fa-regular fa-heart text-[12px] sm:text-sm text-red-800"></i> }
+                  @else if(item.type ==="follow_user"){ <i
+                    class="fa-solid fa-user-plus text-[12px] sm:text-sm text-purple-700"></i> }
+                  @else if(item.type ==="share_post"){ <i
+                    class="fa-solid fa-retweet text-[12px] sm:text-sm text-blue-700"></i> }
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+        @if(isLoadingMore && !allNotificationsLoaded){
+        @for (item of [1,2,3]; track $index) {
+        <div class="flex gap-3 my-3 animate-pulse">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-slate-300 rounded-full"></div>
+          <div class="flex-1 flex flex-col gap-2">
+            <div class="h-3 w-1/3 bg-slate-300 rounded"></div>
+            <div class="h-3 w-1/2 bg-slate-200 rounded"></div>
+          </div>
+        </div>
+        }}
+
+        @if(allNotificationsLoaded && filteredNotifications.length>0){
+        <div class="flex justify-center py-3">
+          <span class="text-slate-500 text-xs sm:text-sm">End of notifications</span>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

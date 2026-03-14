@@ -1,0 +1,80 @@
+<nav class="bg-neutral-primary fixed w-full z-20 top-0 start-0 border-b border-default">
+  <div class="max-w-screen-xl flex items-center justify-between mx-auto p-4 gap-2">
+
+    <a href="" class="flex items-center space-x-2 rtl:space-x-reverse shrink-0">
+      <img src="/assets/route.png" class="h-8 rounded" alt="Route Logo" />
+      <span class="self-center text-[1.1rem] text-heading font-extrabold whitespace-nowrap hidden sm:block">Route
+        Posts</span>
+    </a>
+
+    <div class="flex items-center justify-center flex-grow order-1">
+      <ul
+        class="font-medium flex flex-row p-1.5 space-x-1 sm:space-x-4 rtl:space-x-reverse bg-neutral-secondary-soft md:bg-secondColor/50 rounded-xl">
+
+        <li>
+          <a routerLink="/feed" routerLinkActive="text-maincolor bg-white shadow-sm"
+            class="flex items-center py-2 px-3 text-gray-600 text-[14px] font-extrabold rounded-xl transition-all">
+            <i class="fa-regular fa-house text-lg"></i>
+            <span class="hidden lg:inline ms-2">Feed</span>
+          </a>
+        </li>
+
+        <li>
+          <a routerLink="/profile" routerLinkActive="text-maincolor bg-white shadow-sm"
+            class="flex items-center py-2 px-3 text-gray-600 text-[14px] font-extrabold rounded-xl transition-all">
+            <i class="fa-regular fa-user text-lg"></i>
+            <span class="hidden lg:inline ms-2">Profile</span>
+          </a>
+        </li>
+
+        <li class="relative">
+          <a routerLink="/notification" routerLinkActive="text-maincolor bg-white shadow-sm"
+            class="flex items-center py-2 px-3 text-gray-600 text-[14px] font-extrabold rounded-xl transition-all">
+            <i class="fa-regular fa-bell text-lg"></i>
+            <span class="hidden lg:inline ms-2">Notifications</span>
+
+            @if(unreadCount > 0) {
+            <span
+              class="absolute top-0 right-0 -mt-1 -me-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {{ unreadCount }}
+            </span>
+            }
+          </a>
+        </li>
+
+
+        <li class="lg:hidden">
+          <a routerLink="/suggestions" routerLinkActive="text-maincolor bg-white shadow-sm"
+            class="flex items-center py-2 px-3 text-gray-600 text-[14px] font-extrabold rounded-xl transition-all">
+            <i class="fa-regular fa-lightbulb me-1"></i>
+            <span class="hidden">Suggestions</span>
+          </a>
+
+
+
+        </li>
+
+      </ul>
+    </div>
+
+    <div class="flex items-center order-2 shrink-0">
+      <button type="button"
+        class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary"
+        id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown">
+        <img class="w-9 h-9 rounded-full object-cover" [src]="userPhoto" alt="user photo">
+      </button>
+
+      <div class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
+        id="user-dropdown">
+        <ul class="p-2 text-sm text-body font-medium">
+          <li><a routerLink="/profile" class="block p-2 hover:bg-neutral-tertiary-medium rounded">Profile</a></li>
+          <li><a routerLink="/change" class="block p-2 hover:bg-neutral-tertiary-medium rounded">Settings</a></li>
+          <li class="border-t border-default mt-1">
+            <a (click)="logout()" class="text-red-600 block p-2 hover:bg-red-200 rounded cursor-pointer">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</nav>

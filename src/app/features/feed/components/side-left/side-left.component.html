@@ -1,0 +1,38 @@
+<aside
+    class="w-full text-sm sticky top-24 bg-white rounded-[20px] shadow-sm border border-slate-50 p-2.5 
+           grid grid-cols-2 gap-2
+           xl:flex xl:flex-col xl:gap-1"
+    aria-label="Sidebar Navigation">
+
+    <button (click)="selectCategory('friendsPosts')"
+        [class]="activeView === 'friendsPosts' ? 'bg-blue-50 text-blue-600' : 'text-slate-700 hover:bg-slate-200'"
+        class="flex items-center gap-4 p-2 cursor-pointer rounded-xl transition-colors duration-200 font-semibold 
+               bg-slate-100 xl:bg-transparent">
+        <i class="fa-regular fa-newspaper w-5 text-center"></i>
+        <span>Feed</span>
+    </button>
+
+    <button (click)="selectCategory('myPosts')"
+        [class]="activeView === 'myPosts' ? 'bg-blue-50 text-blue-600' : 'text-slate-700 hover:bg-slate-200'"
+        class="flex items-center gap-4 p-2 cursor-pointer rounded-xl transition-colors duration-200 font-semibold 
+               bg-slate-100 xl:bg-transparent">
+        <i class="fa-solid fa-wand-magic-sparkles w-5 text-center"></i>
+        <span>My Posts</span>
+    </button>
+
+    <button (click)="selectCategory('all')"
+        [class]="activeView === 'all' ? 'bg-blue-50 text-blue-600' : 'text-slate-700 hover:bg-slate-200'"
+        class="flex items-center gap-4 p-2 cursor-pointer rounded-xl transition-colors duration-200 font-semibold 
+               bg-slate-100 xl:bg-transparent">
+        <i class="fa-solid fa-globe w-5 text-center"></i>
+        <span>Community</span>
+    </button>
+
+    <button (click)="selectCategory('mySavedPosts')"
+        [class]="activeView === 'mySavedPosts' ? 'bg-blue-50 text-blue-600' : 'text-slate-700 hover:bg-slate-200'"
+        class="flex items-center gap-4 p-2 cursor-pointer rounded-xl transition-colors duration-200 font-semibold 
+               bg-slate-100 xl:bg-transparent">
+        <i class="fa-regular fa-bookmark w-5 text-center"></i>
+        <span>Saved</span>
+    </button>
+</aside>
