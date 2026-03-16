@@ -1,6 +1,6 @@
 <div class="mt-5">
-    <h2 class="text-[24px] leading-8 font-extrabold">{{ 'register.title' | translate }}</h2>
-    <p class="text-[14px] mt-1 text-gray-700">{{ 'register.subtitle' | translate }}</p>
+    <h2 class="text-[24px] leading-8 font-extrabold">Create a new account</h2>
+    <p class="text-[14px] mt-1 text-gray-700">It is quick and easy.</p>
 
     <form class="grid gap-y-3 mt-5" [formGroup]="registerForm" (ngSubmit)="submitForm()">
         
@@ -13,7 +13,7 @@
                 placeholder=" " />
             <label for="fullName"
                 class="absolute text-sm text-gray-400 duration-300 bg-neutral-primary transform -translate-y-4 scale-75 top-2 z-10 origin-left mx-10 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                {{ 'register.form.full_name' | translate }}
+                Full Name
             </label>
         </div>
         @if(registerForm.get("name")?.invalid && registerForm.get("name")?.touched){
@@ -21,10 +21,10 @@
             <div>
                 <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
                     @if(registerForm.get("name")?.hasError("required")){
-                        <li>{{ 'register.form.errors.name_required' | translate }}</li>
+                        <li>Full Name is required.</li>
                     }
                     @else if (registerForm.get("name")?.hasError("minlength")) {
-                        <li>{{ 'register.form.errors.name_minlength' | translate }}</li>
+                        <li>Name must be at least 3 characters</li>
                     }
                 </ul>
             </div>
@@ -40,7 +40,7 @@
                 placeholder=" " />
             <label for="userName"
                 class="absolute text-sm text-gray-400 duration-300 bg-neutral-primary transform -translate-y-4 scale-75 top-2 z-10 origin-left mx-10 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                {{ 'register.form.username' | translate }}
+                Username (optional)
             </label>
         </div>
 
@@ -53,7 +53,7 @@
                 placeholder=" " />
             <label for="email"
                 class="absolute text-sm text-gray-400 duration-300 bg-neutral-primary transform -translate-y-4 scale-75 top-2 z-10 origin-left mx-10 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                {{ 'register.form.email' | translate }}
+                Email address
             </label>
         </div>
         @if(registerForm.get("email")?.invalid && registerForm.get("email")?.touched){
@@ -61,10 +61,10 @@
             <div>
                 <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
                     @if(registerForm.get("email")?.hasError("required")){
-                        <li>{{ 'register.form.errors.email_required' | translate }}</li>
+                        <li>Email is required.</li>
                     }
                     @else if (registerForm.get("email")?.hasError("email")) {
-                        <li>{{ 'register.form.errors.email_invalid' | translate }}</li>
+                        <li>Please enter a valid email address.</li>
                     }
                 </ul>
             </div>
@@ -77,9 +77,9 @@
                 [class]="{'border-blue-900': registerForm.get('gender')?.valid, 'border-red-700':registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched}"
                 formControlName="gender" id="gender"
                 class="block px-12 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer">
-                <option value="" selected disabled hidden>{{ 'register.form.gender.label' | translate }}</option>
-                <option value="male">{{ 'register.form.gender.male' | translate }}</option>
-                <option value="female">{{ 'register.form.gender.female' | translate }}</option>
+                <option value="" selected disabled hidden>Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
             </select>
         </div>
         @if(registerForm.get("gender")?.invalid && registerForm.get("gender")?.touched){
@@ -87,7 +87,7 @@
             <div>
                 <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
                     @if(registerForm.get("gender")?.hasError("required")){
-                        <li>{{ 'register.form.errors.gender_required' | translate }}</li>
+                        <li>Please select your gender.</li>
                     }
                 </ul>
             </div>
@@ -107,7 +107,7 @@
             <div>
                 <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
                     @if(registerForm.get("dateOfBirth")?.hasError("required")){
-                        <li>{{ 'register.form.errors.dob_required' | translate }}</li>
+                        <li>Date of birth is required.</li>
                     }
                 </ul>
             </div>
@@ -123,7 +123,7 @@
                 placeholder=" " />
             <label for="password"
                 class="absolute text-sm text-gray-400 duration-300 bg-neutral-primary transform -translate-y-4 scale-75 top-2 z-10 origin-left mx-10 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                {{ 'register.form.password' | translate }}
+                Password
             </label>
             <span (click)="showPassword(password)" class="absolute top-1/2 -translate-y-1/2 right-5 text-gray-400 cursor-pointer">
                 <i [class]="password.type==='password'?' fa-eye-slash':' fa-eye'" class="fas"></i>
@@ -134,10 +134,10 @@
             <div>
                 <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
                     @if(registerForm.get("password")?.hasError("required")){
-                        <li>{{ 'register.form.errors.password_required' | translate }}</li>
+                        <li>Password is required.</li>
                     }
                     @else if (registerForm.get("password")?.hasError("pattern")) {
-                        <li>{{ 'register.form.errors.password_pattern' | translate }}</li>
+                        <li>Must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number, and 1 special</li>
                     }
                 </ul>
             </div>
@@ -153,7 +153,7 @@
                 placeholder=" " />
             <label for="rePassword"
                 class="absolute text-sm text-gray-400 duration-300 bg-neutral-primary transform -translate-y-4 scale-75 top-2 z-10 origin-left mx-10 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                {{ 'register.form.confirm_password' | translate }}
+                Confirm Password
             </label>
             <span (click)="showPassword(rePassword)" class="absolute top-1/2 -translate-y-1/2 right-5 text-gray-400 cursor-pointer">
                 <i [class]="rePassword.type==='password'?' fa-eye-slash':' fa-eye'" class="fas"></i>
@@ -164,10 +164,10 @@
             <div>
                 <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
                     @if (registerForm.get("rePassword")?.hasError("required")) {
-                        <li>{{ 'register.form.errors.repassword_required' | translate }}</li>
+                        <li>Please confirm your password.</li>
                     }
                     @else if (registerForm.get("rePassword")?.hasError("mismatch")) {
-                        <li>{{ 'register.form.errors.mismatch' | translate }}</li>
+                        <li>Passwords do not match.</li>
                     }
                 </ul>
             </div>
@@ -177,7 +177,7 @@
         <button type="submit"
             [disabled]="registerForm.invalid || loading"
             class="bg-maincolor text-white text-[16px] font-extrabold w-full py-3 rounded-xl hover:bg-maincolor-900 duration-300 cursor-pointer disabled:bg-gray-500 disabled:cursor-not-allowed">
-            {{ 'register.form.submit' | translate }}
+            Create New Account
             @if (loading) {
                 <i class="fas fa-spinner fa-spin ms-2"></i>
             }

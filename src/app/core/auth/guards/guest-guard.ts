@@ -7,8 +7,7 @@ export const guestGuard: CanActivateFn = (route, state) => {
     return router.parseUrl("/feed")
   }
   else{
-    // router.navigate(["/login"])
-    // return false
+
     return true
   }
 };

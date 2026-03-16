@@ -1,6 +1,6 @@
 <div class="mt-5">
-    <h2 class="text-[24px] leading-8 font-extrabold">{{ 'login_page.title' | translate }}</h2>
-    <p class="text-[14px] mt-1 text-gray-700">{{ 'login_page.subtitle' | translate }}</p>
+    <h2 class="text-[24px] leading-8 font-extrabold">Log in to Route Posts</h2>
+    <p class="text-[14px] mt-1 text-gray-700">Log in and continue your social journey.</p>
 
     <form class="grid gap-y-3 mt-5" [formGroup]="loginForm" (ngSubmit)="submitForm()">
 
@@ -13,7 +13,7 @@
                 placeholder=" " />
             <label for="login"
                 class="absolute text-sm text-gray-400 duration-300 bg-neutral-primary transform -translate-y-4 scale-75 top-2 z-10 origin-left mx-10 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                {{ 'login_page.form.login_label' | translate }}
+                Login or Username
             </label>
         </div>
 
@@ -24,10 +24,10 @@
             <div>
                 <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
                     @if(loginForm.get("login")?.hasError("required")){
-                    <li>{{ 'login_page.form.errors.login_required' | translate }}</li>
+                    <li>Email or username is required.</li>
                     }
                     @else if (loginForm.get("login")?.hasError("minlength")) {
-                    <li>{{ 'login_page.form.errors.login_minlength' | translate }}</li>
+                    <li>Must be at least 3 characters.</li>
                     }
                 </ul>
             </div>
@@ -43,7 +43,7 @@
                 placeholder=" " />
             <label for="password"
                 class="absolute text-sm text-gray-400 duration-300 bg-neutral-primary transform -translate-y-4 scale-75 top-2 z-10 origin-left mx-10 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                {{ 'login_page.form.password_label' | translate }}
+                Password
             </label>
             <span (click)="showPassword(password)"
                 class="absolute top-1/2 -translate-y-1/2 right-5 text-gray-400 cursor-pointer">
@@ -58,10 +58,10 @@
             <div>
                 <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
                     @if(loginForm.get("password")?.hasError("required")){
-                    <li>{{ 'login_page.form.errors.password_required' | translate }}</li>
+                    <li>Password is required.</li>
                     }
                     @else if (loginForm.get("password")?.hasError("pattern")) {
-                    <li>{{ 'login_page.form.errors.password_pattern' | translate }}</li>
+                    <li>Must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number, and 1 special.</li>
                     }
                 </ul>
             </div>
@@ -71,7 +71,7 @@
         <button type="submit" [disabled]="loginForm.invalid || loading"
             class="bg-maincolor text-white text-[16px] font-extrabold w-full py-3 rounded-xl hover:bg-maincolor-900 duration-300 cursor-pointer disabled:bg-gray-500 disabled:cursor-not-allowed">
 
-            {{ 'login_page.form.submit_button' | translate }}
+            Login
 
             @if (loading) {
             <i class="fas fa-spinner fa-spin ms-2"></i>
