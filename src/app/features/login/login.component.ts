@@ -4,13 +4,12 @@ import { FormGroup, FormControl, Validators, AbstractControl, ReactiveFormsModul
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth/services/auth.service';
-import { TranslatePipe } from '@ngx-translate/core';
 
 
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, TranslatePipe],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })

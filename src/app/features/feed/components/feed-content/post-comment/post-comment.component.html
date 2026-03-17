@@ -5,7 +5,7 @@
     </span>
   </div>
 
-  <!-- comment details  -->
+
 
   <div (scroll)="onScroll($event)" class="comments-list max-h-[300px] overflow-y-auto overflow-x-hidden">
     @if(loading && commentsList.length === 0){
@@ -114,7 +114,7 @@
           <div>
             @if(comment.commentCreator._id === userData._id || myPostsId.includes(comment.post )){
             <button (click)="openMenu(comment._id)"
-              class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 opacity-0 group-hover/comment:opacity-100 transition-opacity">
+              class="w-6 h-6  rounded-full hover:bg-slate-100 text-slate-400">
               <i class="fa-solid fa-ellipsis"></i>
             </button>
             @if (isMenuOpen(comment._id)) {
@@ -215,7 +215,7 @@
               @if(reply.commentCreator._id === userData._id || myPostsId.includes(comment.post)) {
               <div class="relative">
                 <button (click)="openMenu(reply._id)"
-                  class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 opacity-0 group-hover/reply:opacity-100 transition-opacity">
+                  class="w-6 h-6 flex items-center  rounded-full hover:bg-slate-100 text-slate-400 opacity-0 group-hover/reply:opacity-100 transition-opacity">
                   <i class="fa-solid fa-ellipsis"></i>
                 </button>
                 @if(isMenuOpen(reply._id)) {
@@ -345,7 +345,7 @@
             </label>
           </div>
 
-          <button [disabled]="loadingCreateComent"
+          <button [disabled]="loadingCreateComent || (content.value?.length < 2 && !saveFile)"
             class="w-8 cursor-pointer h-8 rounded-full bg-blue-400 hover:bg-blue-500 text-white flex items-center justify-center transition-colors disabled:cursor-not-allowed disabled:bg-blue-300">
             <i class="fa-regular fa-paper-plane text-[13px] ms-1 mt-.5"></i>
           </button>

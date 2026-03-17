@@ -2,11 +2,11 @@ import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { NotificationService } from '../../core/services/notification.service';
 import { Notification } from '../../core/models/notification.interface';
 import { NgClass } from '@angular/common';
-import { Router, RouterLink } from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-notifications',
-  imports: [NgClass, RouterLink ],
+  imports: [NgClass ],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.css',
 })

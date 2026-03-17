@@ -4,11 +4,10 @@ import { AuthService } from '../../core/auth/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule , TranslatePipe],
+  imports: [ReactiveFormsModule ],
   templateUrl: './register.component.html',
   // styleUrl: './register.component.css',
   styleUrls: ['./register.component.css']

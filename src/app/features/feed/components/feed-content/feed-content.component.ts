@@ -645,6 +645,7 @@ updatePost(postId: string): void {
     return false
   }
 
+ 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
     const pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;

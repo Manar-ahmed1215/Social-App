@@ -1,4 +1,3 @@
-import { MyProfileDetails } from './../../../../../core/models/my-profile-details.interface';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommentsService } from './comments.service';
 import { Comments } from './comments.interface';
@@ -6,12 +5,11 @@ import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { UserDetails } from '../../../../../core/models/user-details.interface';
 import { TimeAgoPipe } from '../../../../../shared/pipes/time-ago-pipe';
-import { NgClass } from '@angular/common';
 import { ProfileService } from '../../../../../core/services/profile.service';
 
 @Component({
   selector: 'app-post-comment',
-  imports: [ReactiveFormsModule, TimeAgoPipe, FormsModule, NgClass],
+  imports: [ReactiveFormsModule, TimeAgoPipe, FormsModule],
   templateUrl: './post-comment.component.html',
   styleUrl: './post-comment.component.css',
 })
@@ -142,40 +140,43 @@ export class PostCommentComponent implements OnInit {
 
   }
 
-  submitForm(e: Event, form: HTMLFormElement): void {
-    e.preventDefault()
-    this.loadingCreateComent = true
+ submitForm(e: Event, form: HTMLFormElement): void {
+  e.preventDefault()
 
-    if (!this.content.value && !this.saveFile) {
-      return
-    }
-
-    const formData = new FormData()
-    if (this.content.value) {
-      formData.append("content", this.content.value)
-    }
-    if (this.saveFile) {
-      formData.append("image", this.saveFile)
-    }
-
-
-    this.commentsService.createComment(this.postId, formData).subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.commentsList.push(res.data.comment);
-          this.commentsList = this.commentsList.slice();
-
-          form.reset()
-          this.content.reset()
-          this.imageUrl = ""
-          this.loadingCreateComent = false
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
+  if (!this.content.value && !this.saveFile) {
+    return
   }
+
+  this.loadingCreateComent = true  
+
+  const formData = new FormData()
+
+  if (this.content.value) {
+    formData.append("content", this.content.value)
+  }
+
+  if (this.saveFile) {
+    formData.append("image", this.saveFile)
+  }
+
+  this.commentsService.createComment(this.postId, formData).subscribe({
+    next: (res) => {
+      if (res.success) {
+        this.commentsList.push(res.data.comment)
+        this.commentsList = this.commentsList.slice()
+
+        form.reset()
+        this.content.reset()
+        this.imageUrl = ""
+      }
+      this.loadingCreateComent = false
+    },
+    error: (err) => {
+      console.log(err)
+      this.loadingCreateComent = false 
+    }
+  })
+}
   deleteComment(commentId: string, postId: string): void {
     Swal.fire({
       title: 'Are you sure?',

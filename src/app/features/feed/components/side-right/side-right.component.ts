@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FollowersService } from '../../../../core/services/followers.service';
 import { Followers } from '../../../../core/models/followers.interface';
-import { debounceTime, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs';
 import { FormControl, FormsModule } from '@angular/forms';
 import { RouterLink } from "@angular/router";
 
