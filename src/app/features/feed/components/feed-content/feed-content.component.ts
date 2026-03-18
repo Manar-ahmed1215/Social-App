@@ -126,7 +126,7 @@ export class FeedContentComponent implements OnInit, OnChanges {
     this.profileService.getMyprofile().subscribe({
       next:(res)=>{
         this.myDetaile=res.data.user
-        console.log(this.myDetaile)
+        // console.log(this.myDetaile)
       }
     })
   }

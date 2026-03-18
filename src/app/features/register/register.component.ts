@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   selector: 'app-register',
   imports: [ReactiveFormsModule ],
   templateUrl: './register.component.html',
-  // styleUrl: './register.component.css',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit{

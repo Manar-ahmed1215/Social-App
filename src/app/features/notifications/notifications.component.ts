@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-notifications',
-  imports: [NgClass ],
+  imports: [NgClass],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.css',
 })
@@ -22,6 +22,7 @@ export class NotificationsComponent implements OnInit {
   limit: number = 10;
   isLoadingMore: boolean = false;
   allNotificationsLoaded: boolean = false;
+  loadingNotifications: boolean = true;
   ngOnInit(): void {
     this.getAllNotification()
     this.getUnreadCount()
@@ -43,13 +44,14 @@ export class NotificationsComponent implements OnInit {
         } else {
           this.page++;
         }
+
         this.isLoadingMore = false;
-        console.log('this.notificationList')
-        console.log(this.notificationList)
+        this.loadingNotifications = false;
       },
       error: (err) => {
         console.error(err);
         this.isLoadingMore = false;
+        this.loadingNotifications = false;
       }
     });
   }
@@ -58,7 +60,7 @@ export class NotificationsComponent implements OnInit {
     this.notificationService.getUnreadCount().subscribe({
       next: (res) => {
         this.unreadCount = res.data.unreadCount
-        console.log(res.data.unreadCount)
+        // console.log(res.data.unreadCount)
 
       }
     })
@@ -98,12 +100,12 @@ export class NotificationsComponent implements OnInit {
     });
 
   }
-  readAll():void{
+  readAll(): void {
     this.notificationService.readAll().subscribe({
-      next:(res)=>{
+      next: (res) => {
         this.notificationList.forEach(noti => noti.isRead = true);
-      this.unreadCount = 0; 
-      this.filters();
+        this.unreadCount = 0;
+        this.filters();
       }
     })
   }
@@ -127,24 +129,22 @@ export class NotificationsComponent implements OnInit {
   }
 
   goToProfile(actorId: string, event: Event) {
-  event.stopPropagation();
-  this.router.navigate(['/profile', actorId]);
-}
-
-markAsRead(notificationId: string, event: Event) {
-  event.stopPropagation();
-  this.readSingleNotification(notificationId);
-}
-
-goToDetails(item: Notification) {
-  if (item.entityType === "post") {
-    if (item.entity.unavailable) {
-      this.router.navigate(['/details', 'unavailable']);
-    } else {
-      this.router.navigate(['/details', item.entityId]);
-    }
-  } else {
-    console.log('This notification is not a post, no navigation.');
+    event.stopPropagation();
+    this.router.navigate(['/profile', actorId]);
   }
-}
+
+  markAsRead(notificationId: string, event: Event) {
+    event.stopPropagation();
+    this.readSingleNotification(notificationId);
+  }
+
+  goToDetails(item: Notification) {
+    if (item.entityType === "post") {
+      if (item.entity.unavailable) {
+        this.router.navigate(['/details', 'unavailable']);
+      } else {
+        this.router.navigate(['/details', item.entityId]);
+      }
+    }
+  }
 }

@@ -1,7 +1,7 @@
 <section class="py-24">
   <div class="container mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 gap-x-4">
     <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
-      <div class="sticky top-20 bg-white z-20 ">
+      <div class="sticky top-20 bg-white z-10 ">
 
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0">
           <div>
@@ -32,7 +32,7 @@
 
 
       <div class="notifications-list mt-4 space-y-3">
-        @if(filteredNotifications.length === 0) {
+        @if(!loadingNotifications && filteredNotifications.length === 0) {
         <div class="flex justify-center items-center py-10">
           <div class="text-center text-gray-400">
             <i class="fa-regular fa-bell-slash text-3xl sm:text-4xl mb-3"></i>

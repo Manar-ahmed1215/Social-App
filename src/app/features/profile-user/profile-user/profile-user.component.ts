@@ -46,7 +46,9 @@ export class ProfileUserComponent implements OnInit {
       next: (res) => {
         this.userDetails = res.data;
       },
-      error: (err) => console.error(err)
+      error: (err) =>{
+         console.error(err)
+      }
     });
   }
 
@@ -55,7 +57,9 @@ export class ProfileUserComponent implements OnInit {
       next: (res) => {
         this.userPosts = res.data.posts;
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error(err)
+      }
     });
   }
 

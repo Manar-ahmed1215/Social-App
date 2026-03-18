@@ -27,49 +27,38 @@ export class SideRightComponent implements OnInit {
     this.getFollowSuggestions()
     this.inputChange()
   }
+getFollowSuggestions(): void {
+  if (this.loadingSuggestions) return;
+  this.loadingSuggestions = true;
 
-  getFollowSuggestions(): void {
+  this.followersService.getFollowSuggestions(this.page, this.searchText).subscribe({
+    next: (res) => {
+      this.follower.push(...res.data.suggestions);
+      this.loadingSuggestions = false;
+    },
+    error: (err) => {
+      console.log(err);
+      this.loadingSuggestions = false;
+    }
+  });
+}
+ loadMore(): void {
+  if (this.loadingMore || this.loadingSuggestions) return;
 
-    const currentSearch = this.searchText; 
-    this.loadingSuggestions = true;
+  this.page++;
+  this.loadingMore = true;
 
-    this.followersService.getFollowSuggestions(this.page, this.searchText).subscribe({
-      next: (res) => {
-        if (currentSearch !== this.searchText) return;
-
-        const newFollower = res.data.suggestions;
-
-        for (let i = 0; i < newFollower.length; i++) {
-          this.follower.push(newFollower[i]);
-        }
-
-        this.loadingSuggestions = false;
-      },
-      error: (err) => {
-        console.log(err);
-        this.loadingSuggestions = false;
-      }
-    });
-  }
-  loadMore(): void {
-    this.page++
-    this.loadingMore = true
-    this.followersService.getFollowSuggestions(this.page, this.searchText).subscribe({
-      next: (res) => {
-
-        const newFollower = res.data.suggestions
-
-        for (let i = 0; i < newFollower.length; i++) {
-          this.follower.push(newFollower[i])
-        }
-        this.loadingMore = false
-      },
-      error: (err) => {
-        console.log(err)
-        this.loadingMore = false
-      }
-    })
-  }
+  this.followersService.getFollowSuggestions(this.page, this.searchText).subscribe({
+    next: (res) => {
+      this.follower.push(...res.data.suggestions);
+      this.loadingMore = false;
+    },
+    error: (err) => {
+      console.log(err);
+      this.loadingMore = false;
+    }
+  });
+}
 
   followOrUnFollow(userId: string): void {
     this.updatingFollow = userId
@@ -92,14 +81,15 @@ export class SideRightComponent implements OnInit {
     this.follower = [];
     this.getFollowSuggestions();
   }
-  inputChange(): void {
+inputChange(): void {
   this.searchControl.valueChanges
-    .pipe(debounceTime(300))
+    .pipe(debounceTime(700)) 
     .subscribe(value => {
       this.page = 1;
       this.follower = [];
       this.searchText = value ?? '';
-      this.loadingSuggestions=true
+      if (this.loadingSuggestions) return;
+
       this.getFollowSuggestions();
     });
 }

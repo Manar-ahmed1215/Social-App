@@ -67,11 +67,13 @@ export class ProfileComponent implements OnInit {
 
     this.profileService.uploadMyprofilePhoto(formData).subscribe({
       next: (res) => {
-        console.log('Upload Success:', res);
+        // console.log(res);
         this.myProfile.photo = res.user.photo;
         this.profileService.updateUserProfile(res.user);
       },
-      error: (err) => console.log('Upload Error:', err)
+      error: (err) => {
+        console.log( err)
+      }
     });
   }
 
@@ -93,7 +95,9 @@ export class ProfileComponent implements OnInit {
 
         this.profileService.updateUserProfile(res.user);
       },
-      error: (err) => console.log(err)
+      error: (err) =>{
+        console.log(err)
+      } 
     });
   }
   showCoverFile(): void {

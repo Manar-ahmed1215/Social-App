@@ -40,7 +40,7 @@ logout():void{
       next: (res) => {
         console.log(res)
         this.myProfile = res.data.user
-        console.log(this.myProfile)
+        // console.log(this.myProfile)
       },
       error: (err) => {
         console.log(err)
