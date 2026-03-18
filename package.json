@@ -22,6 +22,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.3.18",
     "@angular/common": "^20.3.0",
     "@angular/compiler": "^20.3.0",
     "@angular/core": "^20.3.0",
@@ -34,7 +35,7 @@
     "@tailwindcss/postcss": "^4.2.1",
     "flowbite": "^4.0.1",
     "ngx-spinner": "^21.0.0",
-    "ngx-toastr": "^20.0.5",
+    "ngx-toastr": "^15.0.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.26.22",
     "tslib": "^2.3.0",
