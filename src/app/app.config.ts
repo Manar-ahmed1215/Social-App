@@ -11,7 +11,7 @@ import { loadingScreenInterceptor } from './core/interceptors/loading-screen-int
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
-// استبدال provideToastr بـ ToastrModule.forRoot()
+
 import { ToastrModule } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([headerInterceptor, errorInterceptor, loadingScreenInterceptor])
     ),
     importProvidersFrom(
-      ToastrModule.forRoot(),       // <-- التعديل هنا
+      ToastrModule.forRoot(),
       NgxSpinnerModule,
       BrowserAnimationsModule
     ),

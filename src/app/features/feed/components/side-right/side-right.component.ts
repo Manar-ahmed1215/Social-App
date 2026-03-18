@@ -25,7 +25,7 @@ export class SideRightComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFollowSuggestions()
-    this.inputChange
+    this.inputChange()
   }
 
   getFollowSuggestions(): void {
